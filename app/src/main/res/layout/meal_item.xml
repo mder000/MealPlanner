@@ -17,7 +17,7 @@
         android:id="@+id/breakfast_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Breakfast:"
+        android:text="@string/breakfast_text"
         android:textSize="16sp" />
 
     <androidx.cardview.widget.CardView
@@ -40,7 +40,7 @@
         android:id="@+id/lunch_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lunch:"
+        android:text="@string/lunch_text"
         android:textSize="16sp" />
 
     <androidx.cardview.widget.CardView
@@ -63,7 +63,7 @@
         android:id="@+id/dinner_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lunch:"
+        android:text="@string/dinner_text"
         android:textSize="16sp" />
 
     <androidx.cardview.widget.CardView
