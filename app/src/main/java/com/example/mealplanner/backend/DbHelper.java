@@ -129,6 +129,44 @@ public class DbHelper extends SQLiteOpenHelper {
         return recipes;
     }
 
+    public Recipe getRecipeById(long id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                BaseColumns._ID,
+                RecipeContract.RecipeEntry.COLUMN_NAME_NAME,
+                RecipeContract.RecipeEntry.COLUMN_NAME_INGREDIENTS,
+                RecipeContract.RecipeEntry.COLUMN_NAME_INSTRUCTIONS
+        };
+
+        // Filter results WHERE "_ID" = 'id'
+        String selection = BaseColumns._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(id) };
+
+        Cursor cursor = db.query(
+                RecipeContract.RecipeEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null               // The sort order
+        );
+
+        Recipe recipe = null;
+        if (cursor.moveToFirst()) {
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(RecipeContract.RecipeEntry.COLUMN_NAME_NAME));
+            String ingredients = cursor.getString(cursor.getColumnIndexOrThrow(RecipeContract.RecipeEntry.COLUMN_NAME_INGREDIENTS));
+            String instructions = cursor.getString(cursor.getColumnIndexOrThrow(RecipeContract.RecipeEntry.COLUMN_NAME_INSTRUCTIONS));
+            recipe = new Recipe(id, name, ingredients, instructions);
+        }
+        cursor.close();
+
+        return recipe;
+    }
+
     public long insertMeal(Meal meal) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

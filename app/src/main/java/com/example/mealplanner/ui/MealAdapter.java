@@ -1,5 +1,6 @@
 package com.example.mealplanner.ui;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealplanner.Meal;
 import com.example.mealplanner.R;
+import com.example.mealplanner.RecipeDetailActivity;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -36,8 +38,41 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
         String breakfast = recipeIdToNameMap.get(meal.getBreakfastId());
         String lunch = recipeIdToNameMap.get(meal.getLunchId());
         String dinner = recipeIdToNameMap.get(meal.getDinnerId());
-        String text = "Breakfast: " + breakfast + "\nLunch: " + lunch + "\nDinner: " + dinner;
-        holder.textView.setText(text);
+
+        holder.breakfastTextView.setText("Breakfast: " + breakfast);
+        holder.lunchTextView.setText("Lunch: " + lunch);
+        holder.dinnerTextView.setText("Dinner: " + dinner);
+
+        // Set an OnClickListener for the breakfast TextView
+        holder.breakfastTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRecipeDetailActivity(v, meal.getBreakfastId());
+            }
+        });
+
+        // Set an OnClickListener for the lunch TextView
+        holder.lunchTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRecipeDetailActivity(v, meal.getLunchId());
+            }
+        });
+
+        // Set an OnClickListener for the dinner TextView
+        holder.dinnerTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRecipeDetailActivity(v, meal.getDinnerId());
+            }
+        });
+    }
+
+    // Method to start RecipeDetailActivity
+    private void startRecipeDetailActivity(View v, long recipeId) {
+        Intent intent = new Intent(v.getContext(), RecipeDetailActivity.class);
+        intent.putExtra("RECIPE_ID", recipeId);
+        v.getContext().startActivity(intent);
     }
 
     @Override
@@ -46,11 +81,15 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
+        public TextView breakfastTextView;
+        public TextView lunchTextView;
+        public TextView dinnerTextView;
 
         public ViewHolder(View view) {
             super(view);
-            textView = view.findViewById(R.id.text_meal);
+            breakfastTextView = view.findViewById(R.id.breakfast_meal);
+            lunchTextView = view.findViewById(R.id.lunch_meal);
+            dinnerTextView = view.findViewById(R.id.dinner_meal);
         }
     }
 }
