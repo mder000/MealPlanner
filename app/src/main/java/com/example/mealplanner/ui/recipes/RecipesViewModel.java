@@ -18,7 +18,7 @@ public class RecipesViewModel extends AndroidViewModel {
     public RecipesViewModel(Application application){
         super(application);
         mText = new MutableLiveData<>();
-        mText.setValue("This is recipes fragment");
+        mText.setValue("Your recipes");
     }
 
     public LiveData<String> getText() { return mText; }

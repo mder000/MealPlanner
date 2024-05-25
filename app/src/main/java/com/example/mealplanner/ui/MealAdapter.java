@@ -39,9 +39,9 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
         String lunch = recipeIdToNameMap.get(meal.getLunchId());
         String dinner = recipeIdToNameMap.get(meal.getDinnerId());
 
-        holder.breakfastTextView.setText("Breakfast: " + breakfast);
-        holder.lunchTextView.setText("Lunch: " + lunch);
-        holder.dinnerTextView.setText("Dinner: " + dinner);
+        holder.breakfastTextView.setText(breakfast);
+        holder.lunchTextView.setText(lunch);
+        holder.dinnerTextView.setText(dinner);
 
         // Set an OnClickListener for the breakfast TextView
         holder.breakfastTextView.setOnClickListener(new View.OnClickListener() {

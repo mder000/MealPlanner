@@ -55,7 +55,6 @@ public class RecipesFragment extends Fragment {
         ArrayList<Recipe> recipes = dbHelper.getRecipes();
 
         // Create a new RecyclerView
-        // Create a new RecyclerView
         RecyclerView recyclerView = new RecyclerView(getContext());
 
         // Create new layout parameters
@@ -66,10 +65,7 @@ public class RecipesFragment extends Fragment {
 
         // Convert 56dp to pixels
         float density = getResources().getDisplayMetrics().density;
-        int bottomMargin = Math.round(56 * density); // 56dp
-
-        // Set the bottom margin
-        layoutParams.setMargins(0, 0, 0, bottomMargin);
+        int bottomPadding = Math.round(56 * density); // 56dp
 
         // Set the RecyclerView's layout parameters
         recyclerView.setLayoutParams(layoutParams);
@@ -79,8 +75,12 @@ public class RecipesFragment extends Fragment {
         recipeAdapter = new RecipeAdapter(recipes);
         recyclerView.setAdapter(recipeAdapter);
 
-        // Add the RecyclerView to the root view
-        ((ViewGroup) root).addView(recyclerView);
+        // Add padding to the bottom of the RecyclerView
+        recyclerView.setPadding(0, 100, 0, bottomPadding);
+        recyclerView.setClipToPadding(false);
+
+        // Add the RecyclerView to the root view at the first position
+        ((ViewGroup) root).addView(recyclerView, 0);
 
         return root;
     }
@@ -91,4 +91,5 @@ public class RecipesFragment extends Fragment {
         binding = null;
     }
 }
+
 
