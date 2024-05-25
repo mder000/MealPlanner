@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">MealPlanner</string>
+    <string name="title_home">MealPlanner</string>
+    <string name="home_nav">Home</string>
+    <string name="title_meals">Meal Plans</string>
+    <string name="title_lists">Grocery Lists</string>
+    <string name="title_recipes">Recipes</string>
+    <string name="add_meal">Add New Meal Plan</string>
+    <string name="add_list">Add New Grocery List</string>
+    <string name="add_recipe">Add New Recipe</string>
+    <string name="create_grocery_list_message">Create a new grocery list here!</string>
+    <string name="create_grocery_list_hint">Enter ingredients here...</string>
+    <string name="save_button">Save</string>
+    <string name="create_recipe_message">Create a new recipe here!</string>
+    <string name="name_label">Name</string>
+    <string name="name_hint">Enter name here...</string>
+    <string name="ingredients_label">Ingredients</string>
+    <string name="ingredients_hint">Enter ingredients here...</string>
+    <string name="instructions_label">Instructions</string>
+    <string name="instructions_hint">Enter instructions here..."</string>
+    <string name="select_recipe">Select a recipe</string>
+    <string name="breakfast_text">Breakfast:</string>
+    <string name="lunch_text">Lunch:</string>
+    <string name="dinner_text">Dinner:</string>
+</resources>
