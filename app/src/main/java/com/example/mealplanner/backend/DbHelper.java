@@ -167,6 +167,22 @@ public class DbHelper extends SQLiteOpenHelper {
         return recipe;
     }
 
+    public Recipe getRandomRecipe() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + RecipeContract.RecipeEntry.TABLE_NAME + " ORDER BY RANDOM() LIMIT 1", null);
+        Recipe recipe = null;
+        if (cursor.moveToFirst()) {
+            long id = cursor.getLong(cursor.getColumnIndexOrThrow(BaseColumns._ID));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(RecipeContract.RecipeEntry.COLUMN_NAME_NAME));
+            String ingredients = cursor.getString(cursor.getColumnIndexOrThrow(RecipeContract.RecipeEntry.COLUMN_NAME_INGREDIENTS));
+            String instructions = cursor.getString(cursor.getColumnIndexOrThrow(RecipeContract.RecipeEntry.COLUMN_NAME_INSTRUCTIONS));
+            recipe = new Recipe(id, name, ingredients, instructions);
+        }
+        cursor.close();
+        return recipe;
+    }
+
+
     public long insertMeal(Meal meal) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

@@ -9,17 +9,22 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mealplanner.CreateMealActivity;
 import com.example.mealplanner.CreateGroceryListActivty;
 import com.example.mealplanner.CreateRecipeActivity;
+import com.example.mealplanner.Recipe;
+import com.example.mealplanner.RecipeDetailActivity;
+import com.example.mealplanner.backend.DbHelper;
 import com.example.mealplanner.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private DbHelper dbHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +36,27 @@ public class HomeFragment extends Fragment {
 
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        // Initialize the CardView and TextView
+        CardView recipeCard = binding.recipeCard;
+        TextView recipeText = binding.recipeText;
+
+        // Fetch a random recipe from the database
+        DbHelper dbHelper = new DbHelper(getContext());
+        Recipe randomRecipe = dbHelper.getRandomRecipe();
+
+        // Set the recipe name and fun message in the TextView
+        recipeText.setText("Random recipe for you!\n\n" + "-> " + randomRecipe.getName() + " <-" + "\n\nCheck the recipe here!");
+
+        // Set an OnClickListener on the CardView to navigate to the recipe detail screen
+        recipeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), RecipeDetailActivity.class);
+                intent.putExtra("RECIPE_ID", randomRecipe.getId());
+                startActivity(intent);
+            }
+        });
 
         final Button newMealButton = binding.newMeal;
         newMealButton.setOnClickListener(new View.OnClickListener() {
