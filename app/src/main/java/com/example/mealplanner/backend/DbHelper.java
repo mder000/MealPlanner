@@ -132,8 +132,6 @@ public class DbHelper extends SQLiteOpenHelper {
     public Recipe getRecipeById(long id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
         String[] projection = {
                 BaseColumns._ID,
                 RecipeContract.RecipeEntry.COLUMN_NAME_NAME,
@@ -141,18 +139,17 @@ public class DbHelper extends SQLiteOpenHelper {
                 RecipeContract.RecipeEntry.COLUMN_NAME_INSTRUCTIONS
         };
 
-        // Filter results WHERE "_ID" = 'id'
         String selection = BaseColumns._ID + " = ?";
         String[] selectionArgs = { String.valueOf(id) };
 
         Cursor cursor = db.query(
-                RecipeContract.RecipeEntry.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                null               // The sort order
+                RecipeContract.RecipeEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
         );
 
         Recipe recipe = null;

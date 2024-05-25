@@ -43,7 +43,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
         holder.lunchTextView.setText(lunch);
         holder.dinnerTextView.setText(dinner);
 
-        // Set an OnClickListener for the breakfast TextView
         holder.breakfastTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +50,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
             }
         });
 
-        // Set an OnClickListener for the lunch TextView
         holder.lunchTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +57,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
             }
         });
 
-        // Set an OnClickListener for the dinner TextView
         holder.dinnerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +65,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
         });
     }
 
-    // Method to start RecipeDetailActivity
     private void startRecipeDetailActivity(View v, long recipeId) {
         Intent intent = new Intent(v.getContext(), RecipeDetailActivity.class);
         intent.putExtra("RECIPE_ID", recipeId);

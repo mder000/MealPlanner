@@ -23,21 +23,16 @@ public class RecipeDetailActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Recipe");
         }
 
-        // Get the ID of the recipe from the Intent
         long recipeId = getIntent().getLongExtra("RECIPE_ID", -1);
 
-        // Initialize the database helper
         DbHelper dbHelper = new DbHelper(this);
 
-        // Get the recipe from the database
         Recipe recipe = dbHelper.getRecipeById(recipeId);
 
-        // Get the TextViews from the layout
         TextView nameTextView = findViewById(R.id.recipe_name);
         TextView ingredientsTextView = findViewById(R.id.recipe_ingredients);
         TextView instructionsTextView = findViewById(R.id.recipe_instructions);
 
-        // Set the recipe details
         nameTextView.setText(recipe.getName());
         ingredientsTextView.setText(recipe.getIngredients());
         instructionsTextView.setText(recipe.getInstructions());

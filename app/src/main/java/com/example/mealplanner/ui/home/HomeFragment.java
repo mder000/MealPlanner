@@ -37,18 +37,14 @@ public class HomeFragment extends Fragment {
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        // Initialize the CardView and TextView
         CardView recipeCard = binding.recipeCard;
         TextView recipeText = binding.recipeText;
 
-        // Fetch a random recipe from the database
         DbHelper dbHelper = new DbHelper(getContext());
         Recipe randomRecipe = dbHelper.getRandomRecipe();
 
-        // Set the recipe name and fun message in the TextView
-        recipeText.setText("Random recipe for you!\n\n" + "-> " + randomRecipe.getName() + " <-" + "\n\nCheck the recipe here!");
+        recipeText.setText("Random recipe for you!\n\n" + "-> " + randomRecipe.getName() + " <-" + "\n\nCheck the recipe here");
 
-        // Set an OnClickListener on the CardView to navigate to the recipe detail screen
         recipeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

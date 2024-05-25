@@ -35,17 +35,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         Recipe recipe = recipes.get(position);
         holder.nameTextView.setText(recipe.getName());
 
-        // Set an OnClickListener for the item view
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create a new Intent to start the RecipeDetailActivity
                 Intent intent = new Intent(v.getContext(), RecipeDetailActivity.class);
 
-                // Pass the ID of the clicked recipe to the RecipeDetailActivity
                 intent.putExtra("RECIPE_ID", recipe.getId());
 
-                // Start the RecipeDetailActivity
                 v.getContext().startActivity(intent);
             }
         });

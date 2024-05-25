@@ -38,23 +38,18 @@ public class DashboardFragment extends Fragment {
         final TextView textView = binding.textDashboard;
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        // Initialize the database helper
         DbHelper dbHelper = new DbHelper(getContext());
 
-        // Get the meals and recipes from the database
         ArrayList<Meal> meals = dbHelper.getMeals();
         ArrayList<Recipe> recipes = dbHelper.getRecipes();
 
-        // Create a map of recipe names to their IDs
         Map<Long, String> recipeIdToNameMap = new HashMap<>();
         for (Recipe recipe : recipes) {
             recipeIdToNameMap.put(recipe.getId(), recipe.getName());
         }
 
-        // Get the RecyclerView from the layout
         RecyclerView recyclerView = root.findViewById(R.id.meals_recyclerview);
 
-        // Set up the RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         MealAdapter mealAdapter = new MealAdapter(meals, recipeIdToNameMap);
         recyclerView.setAdapter(mealAdapter);
