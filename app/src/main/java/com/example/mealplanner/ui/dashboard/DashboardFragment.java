@@ -27,6 +27,8 @@ public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
 
+    // Fragment to display all meal plans
+    // Created from a template, navigation menu template hence the dashboard name
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         DashboardViewModel dashboardViewModel =
@@ -38,23 +40,20 @@ public class DashboardFragment extends Fragment {
         final TextView textView = binding.textDashboard;
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        // Initialize the database helper
         DbHelper dbHelper = new DbHelper(getContext());
 
-        // Get the meals and recipes from the database
+        // Fetching all of the meals and recipes from the database
         ArrayList<Meal> meals = dbHelper.getMeals();
         ArrayList<Recipe> recipes = dbHelper.getRecipes();
 
-        // Create a map of recipe names to their IDs
+        // Mapping recipe names with IDs to display them, for each meal
         Map<Long, String> recipeIdToNameMap = new HashMap<>();
         for (Recipe recipe : recipes) {
             recipeIdToNameMap.put(recipe.getId(), recipe.getName());
         }
 
-        // Get the RecyclerView from the layout
         RecyclerView recyclerView = root.findViewById(R.id.meals_recyclerview);
 
-        // Set up the RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         MealAdapter mealAdapter = new MealAdapter(meals, recipeIdToNameMap);
         recyclerView.setAdapter(mealAdapter);

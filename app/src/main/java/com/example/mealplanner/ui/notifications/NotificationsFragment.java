@@ -23,6 +23,8 @@ public class NotificationsFragment extends Fragment {
 
     private FragmentNotificationsBinding binding;
 
+    // Fragment to display all the grocery list
+    // Created from a template, navigation menu template hence the notifications name
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         NotificationsViewModel notificationsViewModel =
@@ -34,6 +36,7 @@ public class NotificationsFragment extends Fragment {
         final TextView textView = binding.textNotifications;
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
+        // Fetching all the grocery lists in the db
         DbHelper dbHelper = new DbHelper(getContext());
         ArrayList<GroceryList> groceryLists = dbHelper.getGroceryLists();
 

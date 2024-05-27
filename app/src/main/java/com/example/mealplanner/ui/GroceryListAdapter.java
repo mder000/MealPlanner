@@ -13,13 +13,16 @@ import com.example.mealplanner.R;
 
 import java.util.ArrayList;
 
+// Adapter to populate the views displaying grocery lists
 public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.ViewHolder> {
     private ArrayList<GroceryList> groceryLists;
 
+    // Constructor takes an ArrayList of GroceryList objects
     public GroceryListAdapter(ArrayList<GroceryList> groceryLists) {
         this.groceryLists = groceryLists;
     }
 
+    // Creating the view with the grocery list items
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -27,6 +30,7 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
         return new ViewHolder(view);
     }
 
+    // Populating a view with Id of the grocery list and the ingredients
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GroceryList groceryList = groceryLists.get(position);

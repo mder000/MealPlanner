@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+// Activity to create a new meal plan
 public class CreateMealActivity extends AppCompatActivity {
 
     private Spinner breakfastSpinner;
@@ -34,30 +35,29 @@ public class CreateMealActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_meal);
 
+        // Changing the text in the action bar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Create Meal Plan");
         }
 
-        // Initialize the database helper
         dbHelper = new DbHelper(this);
 
-        // Get the recipes from the database
+        // Get all the recipes to be displayed in spinners
         ArrayList<Recipe> recipes = dbHelper.getRecipes();
 
-        // Create a map of recipe names to their IDs
+        // Mapping recipes IDs with names
         recipeNameToIdMap = new HashMap<>();
         ArrayList<String> recipeNames = new ArrayList<>();
-        recipeNames.add("Select a recipe"); // Add the initial dummy item
+        recipeNames.add("Select a recipe");
         for (Recipe recipe : recipes) {
             recipeNames.add(recipe.getName());
             recipeNameToIdMap.put(recipe.getName(), recipe.getId());
         }
 
-        // Create an ArrayAdapter for the recipe names
+        // Populating spinners
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, recipeNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // Initialize the Spinners and set their adapters
         breakfastSpinner = findViewById(R.id.breakfast_spinner);
         lunchSpinner = findViewById(R.id.lunch_spinner);
         dinnerSpinner = findViewById(R.id.dinner_spinner);
@@ -65,37 +65,34 @@ public class CreateMealActivity extends AppCompatActivity {
         lunchSpinner.setAdapter(adapter);
         dinnerSpinner.setAdapter(adapter);
 
-        // Set up the save button
+        // Button to save the meal plan
         Button saveButton = findViewById(R.id.save_meal_plan_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get the selected recipes
                 String breakfast = (String) breakfastSpinner.getSelectedItem();
                 String lunch = (String) lunchSpinner.getSelectedItem();
                 String dinner = (String) dinnerSpinner.getSelectedItem();
 
-                // Check if a valid recipe is selected
+                // Check if all meals are populated
                 if (breakfast.equals("Select a recipe") || lunch.equals("Select a recipe") || dinner.equals("Select a recipe")) {
                     Toast.makeText(CreateMealActivity.this, "Please select a recipe for each meal.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                // Get the IDs of the selected recipes
+                // Getting IDs of the recipes to be saved in the db with the meal plan
                 long breakfastId = recipeNameToIdMap.get(breakfast);
                 long lunchId = recipeNameToIdMap.get(lunch);
                 long dinnerId = recipeNameToIdMap.get(dinner);
 
-                // Create a new Meal object
                 Meal meal = new Meal(0, breakfastId, lunchId, dinnerId);
 
-                // Insert the Meal object into the database
                 dbHelper.insertMeal(meal);
 
-                // Show a toast message
+                // Notification on successful creation
                 Toast.makeText(CreateMealActivity.this, "Meal plan added!", Toast.LENGTH_SHORT).show();
 
-                // Reset the Spinner selection
+                // Resetting spinners to initial empty values
                 breakfastSpinner.setSelection(0);
                 lunchSpinner.setSelection(0);
                 dinnerSpinner.setSelection(0);

@@ -32,6 +32,7 @@ public class RecipesFragment extends Fragment {
     private FragmentRecipesBinding binding;
     private RecipeAdapter recipeAdapter;
 
+    // Fragment to display all of the recipes
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -43,32 +44,41 @@ public class RecipesFragment extends Fragment {
         final TextView textView = binding.textRecipes;
         recipesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
+        // Changing the text in the action bar and deleting the go back button
         if (getActivity() != null) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Recipes");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
 
-        // Initialize the database helper
         DbHelper dbHelper = new DbHelper(getContext());
 
-        // Get the recipes from the database
+        // Fetching all the recipes
         ArrayList<Recipe> recipes = dbHelper.getRecipes();
 
-        // Create a new RecyclerView
+        // Setting up the recycler view
         RecyclerView recyclerView = new RecyclerView(getContext());
 
-        // Set the RecyclerView's layout parameters
-        recyclerView.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.MATCH_PARENT
+        );
 
-        // Set up the RecyclerView
+        // Calculating the bottom padding for the recycler view to stay above the navigation menu
+        float density = getResources().getDisplayMetrics().density;
+        int bottomPadding = Math.round(56 * density);
+
+        recyclerView.setLayoutParams(layoutParams);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recipeAdapter = new RecipeAdapter(recipes);
         recyclerView.setAdapter(recipeAdapter);
 
-        // Add the RecyclerView to the root view
-        ((ViewGroup) root).addView(recyclerView);
+        // Setting up the padding
+        recyclerView.setPadding(0, 100, 0, bottomPadding);
+        recyclerView.setClipToPadding(false);
+
+        // Recycle view added dynamically to the root as the fragment is not a child of the main activity
+        ((ViewGroup) root).addView(recyclerView, 0);
 
         return root;
     }
@@ -79,4 +89,5 @@ public class RecipesFragment extends Fragment {
         binding = null;
     }
 }
+
 
