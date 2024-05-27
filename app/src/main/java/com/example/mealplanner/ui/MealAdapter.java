@@ -16,15 +16,18 @@ import com.example.mealplanner.RecipeDetailActivity;
 import java.util.ArrayList;
 import java.util.Map;
 
+// Adapter for views displaying the meal plans
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
     private ArrayList<Meal> meals;
     private Map<Long, String> recipeIdToNameMap;
 
+    // Constructor takes an ArrayList of Meal objects and a Map of recipe IDs to recipe names
     public MealAdapter(ArrayList<Meal> meals, Map<Long, String> recipeIdToNameMap) {
         this.meals = meals;
         this.recipeIdToNameMap = recipeIdToNameMap;
     }
 
+    // Creating the view with the meal items (Meal Plans)
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,6 +35,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    // Populating a view with the meal and corresponding recipes
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Meal meal = meals.get(position);
@@ -43,6 +47,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
         holder.lunchTextView.setText(lunch);
         holder.dinnerTextView.setText(dinner);
 
+        // Method to open recipe details for breakfast
         holder.breakfastTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +55,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
             }
         });
 
+        // Method to open recipe details for lunch
         holder.lunchTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +63,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
             }
         });
 
+        // Method to open recipe details for dinner
         holder.dinnerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +72,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
         });
     }
 
+    // Actual method opening the recipe details activity by ID of the recipe
     private void startRecipeDetailActivity(View v, long recipeId) {
         Intent intent = new Intent(v.getContext(), RecipeDetailActivity.class);
         intent.putExtra("RECIPE_ID", recipeId);

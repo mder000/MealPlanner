@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mealplanner.backend.DbHelper;
 
+// Activity to create a new grocery list
 public class CreateGroceryListActivty extends AppCompatActivity {
     private LinearLayout ingredientsLayout;
     private DbHelper dbHelper;
@@ -25,6 +26,7 @@ public class CreateGroceryListActivty extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_grocery_list_activty);
 
+        // Changing the text in the action bar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Create Grocery List");
         }
@@ -33,6 +35,7 @@ public class CreateGroceryListActivty extends AppCompatActivity {
 
         dbHelper = new DbHelper(this);
 
+        // Button to add a new ingredient to the list
         Button addIngredientButton = findViewById(R.id.add_ingredient);
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,10 +46,12 @@ public class CreateGroceryListActivty extends AppCompatActivity {
             }
         });
 
+        // Button to save the grocery lit
         Button saveButton = findViewById(R.id.save_grocery_list);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Saving all the ingredients to a list
                 StringBuilder ingredients = new StringBuilder();
                 for (int i = 0; i < ingredientsLayout.getChildCount(); i++) {
                     EditText ingredientEditText = (EditText) ingredientsLayout.getChildAt(i);
@@ -56,12 +61,15 @@ public class CreateGroceryListActivty extends AppCompatActivity {
                     }
                 }
 
+                // Parsing the ingredients list to a string
                 GroceryList groceryList = new GroceryList(0, ingredients.toString());
 
                 dbHelper.insertGroceryList(groceryList);
 
+                // Notification the the grocery list was added
                 Toast.makeText(CreateGroceryListActivty.this, "Grocery list added!", Toast.LENGTH_SHORT).show();
 
+                // Deleting the input fields for ingredients
                 ingredientsLayout.removeAllViews();
             }
         });

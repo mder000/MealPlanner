@@ -88,6 +88,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "DROP TABLE IF EXISTS " + GroceryListContract.GroceryListEntry.TABLE_NAME;
     }
 
+    // Method to insert a new recipe into the database.
     public long insertRecipe(Recipe recipe) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -98,6 +99,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    // Method to get all recipes from the database.
     public ArrayList<Recipe> getRecipes() {
         ArrayList<Recipe> recipes = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -129,6 +131,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return recipes;
     }
 
+    // Method to get a specific recipe by its ID.
     public Recipe getRecipeById(long id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -164,6 +167,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return recipe;
     }
 
+    // Method to get a random recipe from the database.
     public Recipe getRandomRecipe() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + RecipeContract.RecipeEntry.TABLE_NAME + " ORDER BY RANDOM() LIMIT 1", null);
@@ -179,7 +183,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return recipe;
     }
 
-
+    // Method to insert a new meal into the database.
     public long insertMeal(Meal meal) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -190,6 +194,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    // Method to get all meals from the database.
     public ArrayList<Meal> getMeals() {
         ArrayList<Meal> meals = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -221,6 +226,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return meals;
     }
 
+    // Method to insert a new grocery list into the database.
     public long insertGroceryList(GroceryList groceryList) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -229,6 +235,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    // Method to get all grocery lists from the database.
     public ArrayList<GroceryList> getGroceryLists() {
         ArrayList<GroceryList> groceryLists = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();

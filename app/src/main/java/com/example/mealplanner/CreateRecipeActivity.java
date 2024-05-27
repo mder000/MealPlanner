@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mealplanner.backend.DbHelper;
 
+// Activity to crate a new recipe
 public class CreateRecipeActivity extends AppCompatActivity {
     private EditText nameEditText;
     private LinearLayout ingredientsLayout;
@@ -26,6 +27,7 @@ public class CreateRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_recipe);
 
+        // Changing the text in the action bar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Create Recipe");
         }
@@ -36,6 +38,7 @@ public class CreateRecipeActivity extends AppCompatActivity {
 
         dbHelper = new DbHelper(this);
 
+        // Button to add a new ingredient to the list
         Button addIngredientButton = findViewById(R.id.add_ingredient);
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,12 +49,14 @@ public class CreateRecipeActivity extends AppCompatActivity {
             }
         });
 
+        // Button to save the recipe
         Button saveButton = findViewById(R.id.save_recipe);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = nameEditText.getText().toString();
 
+                // Saving all the ingredients to a list
                 StringBuilder ingredients = new StringBuilder();
                 for (int i = 0; i < ingredientsLayout.getChildCount(); i++) {
                     EditText ingredientEditText = (EditText) ingredientsLayout.getChildAt(i);
@@ -61,14 +66,17 @@ public class CreateRecipeActivity extends AppCompatActivity {
                     }
                 }
 
+                // Parsing the ingredient list ot string
                 String instructions = instructionsEditText.getText().toString();
 
                 Recipe recipe = new Recipe(0, name, ingredients.toString(), instructions);
 
                 dbHelper.insertRecipe(recipe);
 
+                // Notification on successful creation of the recipe
                 Toast.makeText(CreateRecipeActivity.this, "Recipe added!", Toast.LENGTH_SHORT).show();
 
+                // Resetting all the fields to initial values
                 nameEditText.setText("");
                 instructionsEditText.setText("");
 

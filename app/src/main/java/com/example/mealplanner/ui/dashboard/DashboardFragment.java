@@ -27,6 +27,8 @@ public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
 
+    // Fragment to display all meal plans
+    // Created from a template, navigation menu template hence the dashboard name
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         DashboardViewModel dashboardViewModel =
@@ -40,9 +42,11 @@ public class DashboardFragment extends Fragment {
 
         DbHelper dbHelper = new DbHelper(getContext());
 
+        // Fetching all of the meals and recipes from the database
         ArrayList<Meal> meals = dbHelper.getMeals();
         ArrayList<Recipe> recipes = dbHelper.getRecipes();
 
+        // Mapping recipe names with IDs to display them, for each meal
         Map<Long, String> recipeIdToNameMap = new HashMap<>();
         for (Recipe recipe : recipes) {
             recipeIdToNameMap.put(recipe.getId(), recipe.getName());

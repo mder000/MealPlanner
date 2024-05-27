@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+// Activity to create a new meal plan
 public class CreateMealActivity extends AppCompatActivity {
 
     private Spinner breakfastSpinner;
@@ -34,14 +35,17 @@ public class CreateMealActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_meal);
 
+        // Changing the text in the action bar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Create Meal Plan");
         }
 
         dbHelper = new DbHelper(this);
 
+        // Get all the recipes to be displayed in spinners
         ArrayList<Recipe> recipes = dbHelper.getRecipes();
 
+        // Mapping recipes IDs with names
         recipeNameToIdMap = new HashMap<>();
         ArrayList<String> recipeNames = new ArrayList<>();
         recipeNames.add("Select a recipe");
@@ -50,6 +54,7 @@ public class CreateMealActivity extends AppCompatActivity {
             recipeNameToIdMap.put(recipe.getName(), recipe.getId());
         }
 
+        // Populating spinners
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, recipeNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -60,6 +65,7 @@ public class CreateMealActivity extends AppCompatActivity {
         lunchSpinner.setAdapter(adapter);
         dinnerSpinner.setAdapter(adapter);
 
+        // Button to save the meal plan
         Button saveButton = findViewById(R.id.save_meal_plan_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,11 +74,13 @@ public class CreateMealActivity extends AppCompatActivity {
                 String lunch = (String) lunchSpinner.getSelectedItem();
                 String dinner = (String) dinnerSpinner.getSelectedItem();
 
+                // Check if all meals are populated
                 if (breakfast.equals("Select a recipe") || lunch.equals("Select a recipe") || dinner.equals("Select a recipe")) {
                     Toast.makeText(CreateMealActivity.this, "Please select a recipe for each meal.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                // Getting IDs of the recipes to be saved in the db with the meal plan
                 long breakfastId = recipeNameToIdMap.get(breakfast);
                 long lunchId = recipeNameToIdMap.get(lunch);
                 long dinnerId = recipeNameToIdMap.get(dinner);
@@ -81,8 +89,10 @@ public class CreateMealActivity extends AppCompatActivity {
 
                 dbHelper.insertMeal(meal);
 
+                // Notification on successful creation
                 Toast.makeText(CreateMealActivity.this, "Meal plan added!", Toast.LENGTH_SHORT).show();
 
+                // Resetting spinners to initial empty values
                 breakfastSpinner.setSelection(0);
                 lunchSpinner.setSelection(0);
                 dinnerSpinner.setSelection(0);

@@ -26,6 +26,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private DbHelper dbHelper;
 
+    // Fragment for the home page
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -40,11 +41,14 @@ public class HomeFragment extends Fragment {
         CardView recipeCard = binding.recipeCard;
         TextView recipeText = binding.recipeText;
 
+        // Fetching a random recipe from the db
         DbHelper dbHelper = new DbHelper(getContext());
         Recipe randomRecipe = dbHelper.getRandomRecipe();
 
+        // Message in the clickable card with a random recipe
         recipeText.setText("Random recipe for you!\n\n" + "-> " + randomRecipe.getName() + " <-" + "\n\nCheck the recipe here");
 
+        // OnClick method to open the recipe details
         recipeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +58,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // Method to open the create new meal plan page
         final Button newMealButton = binding.newMeal;
         newMealButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -62,6 +67,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // Method to open the create new grocery list page
         final Button newGroceryListButton = binding.newGrocery;
         newGroceryListButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -70,6 +76,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // Method to open the create new recipe page
         final Button newRecipeButton = binding.newRecipe;
         newRecipeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
